@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package finance;
+
+option go_package = "./proto";
+
+import "google/api/annotations.proto";
+
+service FinanceService {
+  rpc AddTransaction(AddTransactionRequest) returns (TransactionResponse) {
+    option (google.api.http) = {
+      post: "/v1/transaction"
+      body: "*"
+    };
+  }
+  rpc GetBalance(Empty) returns (BalanceResponse) {
+    option (google.api.http) = {
+      get: "/v1/balance"
+    };
+  }
+  rpc ListTransactions(Empty) returns (TransactionsResponse) {
+    option (google.api.http) = {
+      get: "/v1/transactions"
+    };
+  }
+}
+
+message Empty {}
+
+message AddTransactionRequest {
+  string name = 1;
+  double amount = 2;
+  string type = 3;
+}
+
+message Transaction {
+  string id = 1;
+  string name = 2;
+  double amount = 3;
+  string type = 4;
+}
+
+message TransactionResponse {
+  Transaction transaction = 1;
+}
+
+message BalanceResponse {
+  double balance = 1;
+}
+
+message TransactionsResponse {
+  repeated Transaction transactions = 1;
+}
