@@ -4,50 +4,48 @@ package finance;
 
 option go_package = "./proto";
 
-import "google/api/annotations.proto";
-
 service FinanceService {
-  rpc AddTransaction(AddTransactionRequest) returns (TransactionResponse) {
-    option (google.api.http) = {
-      post: "/v1/transaction"
-      body: "*"
-    };
-  }
-  rpc GetBalance(Empty) returns (BalanceResponse) {
-    option (google.api.http) = {
-      get: "/v1/balance"
-    };
-  }
-  rpc ListTransactions(Empty) returns (TransactionsResponse) {
-    option (google.api.http) = {
-      get: "/v1/transactions"
-    };
-  }
-}
-
-message Empty {}
-
-message AddTransactionRequest {
-  string name = 1;
-  double amount = 2;
-  string type = 3;
+  rpc CreateTransaction(CreateTransactionRequest) returns (Transaction);
+  rpc GetTransaction(GetTransactionRequest) returns (Transaction);
+  rpc ListTransactions(ListTransactionsRequest) returns (ListTransactionsResponse);
+  rpc GetBalance(GetBalanceRequest) returns (BalanceResponse);
 }
 
 message Transaction {
   string id = 1;
-  string name = 2;
+  string user_id = 2;
   double amount = 3;
-  string type = 4;
+  string type = 4; // income, expense
+  string category = 5;
+  string description = 6;
+  int64 timestamp = 7;
 }
 
-message TransactionResponse {
-  Transaction transaction = 1;
+message CreateTransactionRequest {
+  string user_id = 1;
+  double amount = 2;
+  string type = 3;
+  string category = 4;
+  string description = 5;
+}
+
+message GetTransactionRequest {
+  string id = 1;
+}
+
+message ListTransactionsRequest {
+  string user_id = 1;
+}
+
+message ListTransactionsResponse {
+  repeated Transaction transactions = 1;
+}
+
+message GetBalanceRequest {
+  string user_id = 1;
 }
 
 message BalanceResponse {
   double balance = 1;
 }
 
-message TransactionsResponse {
-  repeated Transaction transactions = 1;
-}

@@ -7,7 +7,6 @@
 package proto
 
 import (
-	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -22,115 +21,22 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Empty struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Empty) Reset() {
-	*x = Empty{}
-	mi := &file_proto_finance_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Empty) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Empty) ProtoMessage() {}
-
-func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_finance_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
-func (*Empty) Descriptor() ([]byte, []int) {
-	return file_proto_finance_proto_rawDescGZIP(), []int{0}
-}
-
-type AddTransactionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Amount        float64                `protobuf:"fixed64,2,opt,name=amount,proto3" json:"amount,omitempty"`
-	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddTransactionRequest) Reset() {
-	*x = AddTransactionRequest{}
-	mi := &file_proto_finance_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddTransactionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddTransactionRequest) ProtoMessage() {}
-
-func (x *AddTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_finance_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddTransactionRequest.ProtoReflect.Descriptor instead.
-func (*AddTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_proto_finance_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *AddTransactionRequest) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddTransactionRequest) GetAmount() float64 {
-	if x != nil {
-		return x.Amount
-	}
-	return 0
-}
-
-func (x *AddTransactionRequest) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
 type Transaction struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Amount        float64                `protobuf:"fixed64,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Type          string                 `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"`
+	Type          string                 `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"` // income, expense
+	Category      string                 `protobuf:"bytes,5,opt,name=category,proto3" json:"category,omitempty"`
+	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
+	Timestamp     int64                  `protobuf:"varint,7,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Transaction) Reset() {
 	*x = Transaction{}
-	mi := &file_proto_finance_proto_msgTypes[2]
+	mi := &file_proto_finance_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -142,7 +48,7 @@ func (x *Transaction) String() string {
 func (*Transaction) ProtoMessage() {}
 
 func (x *Transaction) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_finance_proto_msgTypes[2]
+	mi := &file_proto_finance_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -155,7 +61,7 @@ func (x *Transaction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Transaction.ProtoReflect.Descriptor instead.
 func (*Transaction) Descriptor() ([]byte, []int) {
-	return file_proto_finance_proto_rawDescGZIP(), []int{2}
+	return file_proto_finance_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Transaction) GetId() string {
@@ -165,9 +71,9 @@ func (x *Transaction) GetId() string {
 	return ""
 }
 
-func (x *Transaction) GetName() string {
+func (x *Transaction) GetUserId() string {
 	if x != nil {
-		return x.Name
+		return x.UserId
 	}
 	return ""
 }
@@ -186,27 +92,168 @@ func (x *Transaction) GetType() string {
 	return ""
 }
 
-type TransactionResponse struct {
+func (x *Transaction) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *Transaction) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Transaction) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+type CreateTransactionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Transaction   *Transaction           `protobuf:"bytes,1,opt,name=transaction,proto3" json:"transaction,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Amount        float64                `protobuf:"fixed64,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	Category      string                 `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
+	Description   string                 `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TransactionResponse) Reset() {
-	*x = TransactionResponse{}
+func (x *CreateTransactionRequest) Reset() {
+	*x = CreateTransactionRequest{}
+	mi := &file_proto_finance_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTransactionRequest) ProtoMessage() {}
+
+func (x *CreateTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_finance_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTransactionRequest.ProtoReflect.Descriptor instead.
+func (*CreateTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_proto_finance_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *CreateTransactionRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+type GetTransactionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTransactionRequest) Reset() {
+	*x = GetTransactionRequest{}
+	mi := &file_proto_finance_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTransactionRequest) ProtoMessage() {}
+
+func (x *GetTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_finance_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTransactionRequest.ProtoReflect.Descriptor instead.
+func (*GetTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_proto_finance_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetTransactionRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type ListTransactionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionsRequest) Reset() {
+	*x = ListTransactionsRequest{}
 	mi := &file_proto_finance_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TransactionResponse) String() string {
+func (x *ListTransactionsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TransactionResponse) ProtoMessage() {}
+func (*ListTransactionsRequest) ProtoMessage() {}
 
-func (x *TransactionResponse) ProtoReflect() protoreflect.Message {
+func (x *ListTransactionsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_finance_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -218,16 +265,104 @@ func (x *TransactionResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TransactionResponse.ProtoReflect.Descriptor instead.
-func (*TransactionResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListTransactionsRequest.ProtoReflect.Descriptor instead.
+func (*ListTransactionsRequest) Descriptor() ([]byte, []int) {
 	return file_proto_finance_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *TransactionResponse) GetTransaction() *Transaction {
+func (x *ListTransactionsRequest) GetUserId() string {
 	if x != nil {
-		return x.Transaction
+		return x.UserId
+	}
+	return ""
+}
+
+type ListTransactionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Transactions  []*Transaction         `protobuf:"bytes,1,rep,name=transactions,proto3" json:"transactions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionsResponse) Reset() {
+	*x = ListTransactionsResponse{}
+	mi := &file_proto_finance_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionsResponse) ProtoMessage() {}
+
+func (x *ListTransactionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_finance_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionsResponse.ProtoReflect.Descriptor instead.
+func (*ListTransactionsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_finance_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListTransactionsResponse) GetTransactions() []*Transaction {
+	if x != nil {
+		return x.Transactions
 	}
 	return nil
+}
+
+type GetBalanceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBalanceRequest) Reset() {
+	*x = GetBalanceRequest{}
+	mi := &file_proto_finance_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBalanceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBalanceRequest) ProtoMessage() {}
+
+func (x *GetBalanceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_finance_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBalanceRequest.ProtoReflect.Descriptor instead.
+func (*GetBalanceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_finance_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetBalanceRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
 }
 
 type BalanceResponse struct {
@@ -239,7 +374,7 @@ type BalanceResponse struct {
 
 func (x *BalanceResponse) Reset() {
 	*x = BalanceResponse{}
-	mi := &file_proto_finance_proto_msgTypes[4]
+	mi := &file_proto_finance_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -251,7 +386,7 @@ func (x *BalanceResponse) String() string {
 func (*BalanceResponse) ProtoMessage() {}
 
 func (x *BalanceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_finance_proto_msgTypes[4]
+	mi := &file_proto_finance_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,7 +399,7 @@ func (x *BalanceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BalanceResponse.ProtoReflect.Descriptor instead.
 func (*BalanceResponse) Descriptor() ([]byte, []int) {
-	return file_proto_finance_proto_rawDescGZIP(), []int{4}
+	return file_proto_finance_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *BalanceResponse) GetBalance() float64 {
@@ -274,76 +409,41 @@ func (x *BalanceResponse) GetBalance() float64 {
 	return 0
 }
 
-type TransactionsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Transactions  []*Transaction         `protobuf:"bytes,1,rep,name=transactions,proto3" json:"transactions,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TransactionsResponse) Reset() {
-	*x = TransactionsResponse{}
-	mi := &file_proto_finance_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TransactionsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TransactionsResponse) ProtoMessage() {}
-
-func (x *TransactionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_finance_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TransactionsResponse.ProtoReflect.Descriptor instead.
-func (*TransactionsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_finance_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *TransactionsResponse) GetTransactions() []*Transaction {
-	if x != nil {
-		return x.Transactions
-	}
-	return nil
-}
-
 var File_proto_finance_proto protoreflect.FileDescriptor
 
 const file_proto_finance_proto_rawDesc = "" +
 	"\n" +
-	"\x13proto/finance.proto\x12\afinance\x1a\x1cgoogle/api/annotations.proto\"\a\n" +
-	"\x05Empty\"W\n" +
-	"\x15AddTransactionRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
-	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12\x12\n" +
-	"\x04type\x18\x03 \x01(\tR\x04type\"]\n" +
+	"\x13proto/finance.proto\x12\afinance\"\xbe\x01\n" +
 	"\vTransaction\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
 	"\x06amount\x18\x03 \x01(\x01R\x06amount\x12\x12\n" +
-	"\x04type\x18\x04 \x01(\tR\x04type\"M\n" +
-	"\x13TransactionResponse\x126\n" +
-	"\vtransaction\x18\x01 \x01(\v2\x14.finance.TransactionR\vtransaction\"+\n" +
+	"\x04type\x18\x04 \x01(\tR\x04type\x12\x1a\n" +
+	"\bcategory\x18\x05 \x01(\tR\bcategory\x12 \n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x1c\n" +
+	"\ttimestamp\x18\a \x01(\x03R\ttimestamp\"\x9d\x01\n" +
+	"\x18CreateTransactionRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x16\n" +
+	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12\x1a\n" +
+	"\bcategory\x18\x04 \x01(\tR\bcategory\x12 \n" +
+	"\vdescription\x18\x05 \x01(\tR\vdescription\"'\n" +
+	"\x15GetTransactionRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"2\n" +
+	"\x17ListTransactionsRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"T\n" +
+	"\x18ListTransactionsResponse\x128\n" +
+	"\ftransactions\x18\x01 \x03(\v2\x14.finance.TransactionR\ftransactions\",\n" +
+	"\x11GetBalanceRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"+\n" +
 	"\x0fBalanceResponse\x12\x18\n" +
-	"\abalance\x18\x01 \x01(\x01R\abalance\"P\n" +
-	"\x14TransactionsResponse\x128\n" +
-	"\ftransactions\x18\x01 \x03(\v2\x14.finance.TransactionR\ftransactions2\xa6\x02\n" +
-	"\x0eFinanceService\x12j\n" +
-	"\x0eAddTransaction\x12\x1e.finance.AddTransactionRequest\x1a\x1c.finance.TransactionResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/transaction\x12K\n" +
+	"\abalance\x18\x01 \x01(\x01R\abalance2\xc3\x02\n" +
+	"\x0eFinanceService\x12L\n" +
+	"\x11CreateTransaction\x12!.finance.CreateTransactionRequest\x1a\x14.finance.Transaction\x12F\n" +
+	"\x0eGetTransaction\x12\x1e.finance.GetTransactionRequest\x1a\x14.finance.Transaction\x12W\n" +
+	"\x10ListTransactions\x12 .finance.ListTransactionsRequest\x1a!.finance.ListTransactionsResponse\x12B\n" +
 	"\n" +
-	"GetBalance\x12\x0e.finance.Empty\x1a\x18.finance.BalanceResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/v1/balance\x12[\n" +
-	"\x10ListTransactions\x12\x0e.finance.Empty\x1a\x1d.finance.TransactionsResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/transactionsB\tZ\a./protob\x06proto3"
+	"GetBalance\x12\x1a.finance.GetBalanceRequest\x1a\x18.finance.BalanceResponseB\tZ\a./protob\x06proto3"
 
 var (
 	file_proto_finance_proto_rawDescOnce sync.Once
@@ -357,29 +457,31 @@ func file_proto_finance_proto_rawDescGZIP() []byte {
 	return file_proto_finance_proto_rawDescData
 }
 
-var file_proto_finance_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_finance_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_finance_proto_goTypes = []any{
-	(*Empty)(nil),                 // 0: finance.Empty
-	(*AddTransactionRequest)(nil), // 1: finance.AddTransactionRequest
-	(*Transaction)(nil),           // 2: finance.Transaction
-	(*TransactionResponse)(nil),   // 3: finance.TransactionResponse
-	(*BalanceResponse)(nil),       // 4: finance.BalanceResponse
-	(*TransactionsResponse)(nil),  // 5: finance.TransactionsResponse
+	(*Transaction)(nil),              // 0: finance.Transaction
+	(*CreateTransactionRequest)(nil), // 1: finance.CreateTransactionRequest
+	(*GetTransactionRequest)(nil),    // 2: finance.GetTransactionRequest
+	(*ListTransactionsRequest)(nil),  // 3: finance.ListTransactionsRequest
+	(*ListTransactionsResponse)(nil), // 4: finance.ListTransactionsResponse
+	(*GetBalanceRequest)(nil),        // 5: finance.GetBalanceRequest
+	(*BalanceResponse)(nil),          // 6: finance.BalanceResponse
 }
 var file_proto_finance_proto_depIdxs = []int32{
-	2, // 0: finance.TransactionResponse.transaction:type_name -> finance.Transaction
-	2, // 1: finance.TransactionsResponse.transactions:type_name -> finance.Transaction
-	1, // 2: finance.FinanceService.AddTransaction:input_type -> finance.AddTransactionRequest
-	0, // 3: finance.FinanceService.GetBalance:input_type -> finance.Empty
-	0, // 4: finance.FinanceService.ListTransactions:input_type -> finance.Empty
-	3, // 5: finance.FinanceService.AddTransaction:output_type -> finance.TransactionResponse
-	4, // 6: finance.FinanceService.GetBalance:output_type -> finance.BalanceResponse
-	5, // 7: finance.FinanceService.ListTransactions:output_type -> finance.TransactionsResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 0: finance.ListTransactionsResponse.transactions:type_name -> finance.Transaction
+	1, // 1: finance.FinanceService.CreateTransaction:input_type -> finance.CreateTransactionRequest
+	2, // 2: finance.FinanceService.GetTransaction:input_type -> finance.GetTransactionRequest
+	3, // 3: finance.FinanceService.ListTransactions:input_type -> finance.ListTransactionsRequest
+	5, // 4: finance.FinanceService.GetBalance:input_type -> finance.GetBalanceRequest
+	0, // 5: finance.FinanceService.CreateTransaction:output_type -> finance.Transaction
+	0, // 6: finance.FinanceService.GetTransaction:output_type -> finance.Transaction
+	4, // 7: finance.FinanceService.ListTransactions:output_type -> finance.ListTransactionsResponse
+	6, // 8: finance.FinanceService.GetBalance:output_type -> finance.BalanceResponse
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_proto_finance_proto_init() }
@@ -393,7 +495,7 @@ func file_proto_finance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_finance_proto_rawDesc), len(file_proto_finance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

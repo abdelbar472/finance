@@ -19,18 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	FinanceService_AddTransaction_FullMethodName   = "/finance.FinanceService/AddTransaction"
-	FinanceService_GetBalance_FullMethodName       = "/finance.FinanceService/GetBalance"
-	FinanceService_ListTransactions_FullMethodName = "/finance.FinanceService/ListTransactions"
+	FinanceService_CreateTransaction_FullMethodName = "/finance.FinanceService/CreateTransaction"
+	FinanceService_GetTransaction_FullMethodName    = "/finance.FinanceService/GetTransaction"
+	FinanceService_ListTransactions_FullMethodName  = "/finance.FinanceService/ListTransactions"
+	FinanceService_GetBalance_FullMethodName        = "/finance.FinanceService/GetBalance"
 )
 
 // FinanceServiceClient is the client API for FinanceService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FinanceServiceClient interface {
-	AddTransaction(ctx context.Context, in *AddTransactionRequest, opts ...grpc.CallOption) (*TransactionResponse, error)
-	GetBalance(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BalanceResponse, error)
-	ListTransactions(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TransactionsResponse, error)
+	CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
+	GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*Transaction, error)
+	ListTransactions(ctx context.Context, in *ListTransactionsRequest, opts ...grpc.CallOption) (*ListTransactionsResponse, error)
+	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*BalanceResponse, error)
 }
 
 type financeServiceClient struct {
@@ -41,30 +43,40 @@ func NewFinanceServiceClient(cc grpc.ClientConnInterface) FinanceServiceClient {
 	return &financeServiceClient{cc}
 }
 
-func (c *financeServiceClient) AddTransaction(ctx context.Context, in *AddTransactionRequest, opts ...grpc.CallOption) (*TransactionResponse, error) {
+func (c *financeServiceClient) CreateTransaction(ctx context.Context, in *CreateTransactionRequest, opts ...grpc.CallOption) (*Transaction, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TransactionResponse)
-	err := c.cc.Invoke(ctx, FinanceService_AddTransaction_FullMethodName, in, out, cOpts...)
+	out := new(Transaction)
+	err := c.cc.Invoke(ctx, FinanceService_CreateTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *financeServiceClient) GetBalance(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BalanceResponse, error) {
+func (c *financeServiceClient) GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*Transaction, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Transaction)
+	err := c.cc.Invoke(ctx, FinanceService_GetTransaction_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *financeServiceClient) ListTransactions(ctx context.Context, in *ListTransactionsRequest, opts ...grpc.CallOption) (*ListTransactionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTransactionsResponse)
+	err := c.cc.Invoke(ctx, FinanceService_ListTransactions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *financeServiceClient) GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*BalanceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(BalanceResponse)
 	err := c.cc.Invoke(ctx, FinanceService_GetBalance_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *financeServiceClient) ListTransactions(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*TransactionsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TransactionsResponse)
-	err := c.cc.Invoke(ctx, FinanceService_ListTransactions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,9 +87,10 @@ func (c *financeServiceClient) ListTransactions(ctx context.Context, in *Empty, 
 // All implementations must embed UnimplementedFinanceServiceServer
 // for forward compatibility.
 type FinanceServiceServer interface {
-	AddTransaction(context.Context, *AddTransactionRequest) (*TransactionResponse, error)
-	GetBalance(context.Context, *Empty) (*BalanceResponse, error)
-	ListTransactions(context.Context, *Empty) (*TransactionsResponse, error)
+	CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error)
+	GetTransaction(context.Context, *GetTransactionRequest) (*Transaction, error)
+	ListTransactions(context.Context, *ListTransactionsRequest) (*ListTransactionsResponse, error)
+	GetBalance(context.Context, *GetBalanceRequest) (*BalanceResponse, error)
 	mustEmbedUnimplementedFinanceServiceServer()
 }
 
@@ -88,14 +101,17 @@ type FinanceServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedFinanceServiceServer struct{}
 
-func (UnimplementedFinanceServiceServer) AddTransaction(context.Context, *AddTransactionRequest) (*TransactionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method AddTransaction not implemented")
+func (UnimplementedFinanceServiceServer) CreateTransaction(context.Context, *CreateTransactionRequest) (*Transaction, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateTransaction not implemented")
 }
-func (UnimplementedFinanceServiceServer) GetBalance(context.Context, *Empty) (*BalanceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetBalance not implemented")
+func (UnimplementedFinanceServiceServer) GetTransaction(context.Context, *GetTransactionRequest) (*Transaction, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTransaction not implemented")
 }
-func (UnimplementedFinanceServiceServer) ListTransactions(context.Context, *Empty) (*TransactionsResponse, error) {
+func (UnimplementedFinanceServiceServer) ListTransactions(context.Context, *ListTransactionsRequest) (*ListTransactionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListTransactions not implemented")
+}
+func (UnimplementedFinanceServiceServer) GetBalance(context.Context, *GetBalanceRequest) (*BalanceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetBalance not implemented")
 }
 func (UnimplementedFinanceServiceServer) mustEmbedUnimplementedFinanceServiceServer() {}
 func (UnimplementedFinanceServiceServer) testEmbeddedByValue()                        {}
@@ -118,44 +134,44 @@ func RegisterFinanceServiceServer(s grpc.ServiceRegistrar, srv FinanceServiceSer
 	s.RegisterService(&FinanceService_ServiceDesc, srv)
 }
 
-func _FinanceService_AddTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddTransactionRequest)
+func _FinanceService_CreateTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTransactionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FinanceServiceServer).AddTransaction(ctx, in)
+		return srv.(FinanceServiceServer).CreateTransaction(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FinanceService_AddTransaction_FullMethodName,
+		FullMethod: FinanceService_CreateTransaction_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FinanceServiceServer).AddTransaction(ctx, req.(*AddTransactionRequest))
+		return srv.(FinanceServiceServer).CreateTransaction(ctx, req.(*CreateTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FinanceService_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+func _FinanceService_GetTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTransactionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FinanceServiceServer).GetBalance(ctx, in)
+		return srv.(FinanceServiceServer).GetTransaction(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FinanceService_GetBalance_FullMethodName,
+		FullMethod: FinanceService_GetTransaction_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FinanceServiceServer).GetBalance(ctx, req.(*Empty))
+		return srv.(FinanceServiceServer).GetTransaction(ctx, req.(*GetTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _FinanceService_ListTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(ListTransactionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -167,7 +183,25 @@ func _FinanceService_ListTransactions_Handler(srv interface{}, ctx context.Conte
 		FullMethod: FinanceService_ListTransactions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FinanceServiceServer).ListTransactions(ctx, req.(*Empty))
+		return srv.(FinanceServiceServer).ListTransactions(ctx, req.(*ListTransactionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FinanceService_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBalanceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FinanceServiceServer).GetBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FinanceService_GetBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FinanceServiceServer).GetBalance(ctx, req.(*GetBalanceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -180,16 +214,20 @@ var FinanceService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*FinanceServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AddTransaction",
-			Handler:    _FinanceService_AddTransaction_Handler,
+			MethodName: "CreateTransaction",
+			Handler:    _FinanceService_CreateTransaction_Handler,
 		},
 		{
-			MethodName: "GetBalance",
-			Handler:    _FinanceService_GetBalance_Handler,
+			MethodName: "GetTransaction",
+			Handler:    _FinanceService_GetTransaction_Handler,
 		},
 		{
 			MethodName: "ListTransactions",
 			Handler:    _FinanceService_ListTransactions_Handler,
+		},
+		{
+			MethodName: "GetBalance",
+			Handler:    _FinanceService_GetBalance_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
